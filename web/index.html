@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!-- Encoding -->
+<meta charset="utf-8">
+<title>Home Page</title>
+
+<link rel="stylesheet" href="css/mcss.css">
+<script src="js/mjs.js"></script>
+    <link href="css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+
+
+</head>
+<body>
+
+
+
+<div id="wapper">
+    <div id="heading">
+
+        <div id="ff_login_div" data-toggle="modal" data-target="#login-modal">
+            <a href="#" data-toggle="modal" data-target="#login-modal">Login</a>
+        </div>
+         <div id="ff_select_div">
+             <select onchange="abc()" id="ff_select">
+                <option value="Page_1-1_First_Page.html">Page_1-1_First_Page.html</option><option value="Page_2-1_Second_Page.html">Page_2-1_Second_Page.html</option><option value="Page_3-1_Second_Page.html">Page_3-1_Second_Page.html</option><
+             </select>
+         </div>
+
+    </div>
+    <div id="ff_body">
+        <div id="ff_left">
+            <div id="ff_camm">
+                <iframe style="width: 100%;height: 100%;" src="https://cam09.herokuapp.com/Scalable-Broadcast.html#900" name="iframe_a"></iframe>
+            </div>
+            <div id="ff_chat_1">
+                <input style="float: left" type="button" value="Post"  onclick="post_comment();"/>
+                <p id="login_first" style="    width: 120px;float: left;margin-left: 22px;padding-top: 0px;color: red;"></p>
+
+                <textarea id="ussser_comment" style="margin-top: 10px;" rows="3" cols="40" name="chat_1" placeholder="Enter text here..." ></textarea>
+            </div>
+
+            <div id="ff_chat_2" style="overflow-y:scroll; height:480px;">
+                <div id="ff_chat_0" style="height:450px;">
+
+                <p id="username1" style="    height: 10px;">Access Token</p>
+                <textarea  id="chatuser1" rows="3" cols="40" name="chat_1" >Enter text here...</textarea>
+
+                    <p id="username2" style="    height: 10px;">Access Token</p>
+                <textarea id="chatuser2" rows="3" cols="40" name="chat_1" style="margin-top: 10px;" >Enter text here...</textarea>
+
+                    <p id="username3" style="    height: 10px;">Access Token</p>
+                    <textarea id="chatuser3" rows="3" cols="40" name="chat_1" style="margin-top: 10px;" >Enter text here...</textarea>
+
+                    <p id="username4" style="    height: 10px;">Access Token</p>
+                    <textarea id="chatuser4" rows="3" cols="40" name="chat_1" style="margin-top: 10px;" >Enter text here...</textarea>
+
+                    <p id="username5" style="    height: 10px;">Access Token</p>
+                    <textarea id="chatuser5" rows="3" cols="40" name="chat_1" style="margin-top: 10px;margin-bottom: 70px;" >Enter text here...</textarea>
+                </div>
+
+            </div>
+        </div>
+
+
+        <div id="ff_right">
+            <div id="link123" style="font-size: 24px;padding-left: 30px;padding-top: 17px;    padding-bottom: 14px;">
+                <a style="    text-decoration: underline;color: red;cursor: pointer;" id="link_url" href="" ></a>
+            </div>
+            <div>
+                <iframe id="if_page" style="width: 100%;height: 592px;" src="" name="iframe_a"></iframe>
+            </div>
+
+        </div>
+
+    </div>
+
+
+
+
+
+</div>
+
+
+<div class="modal fade" id="login-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog" id="hello1239">
+        <div class="loginmodal-container">
+            <h1>Login</h1><br>
+            <h5 id="invalidd" style="color:red;"></h5>
+            <form autocomplete="off">
+                <input type="text" id="AccessToken" name="AccessToken" placeholder="AccessToken" autocomplete="off">
+                <input type="text" id="pass" name="pass" placeholder="Password" autocomplete="off">
+                <input id="loogin" type="button" onclick="login_user()" name="login" class="login loginmodal-submit" value="Login" style="    width: 100px;border-radius: 7px;">
+            </form>
+        </div>
+    </div>
+</div>
+
+
+</body>
+
+<script src="js/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+
+<style>
+
+
+
+
+</style>
+
+<script src="js/jquery.min.js"></script>
+
+<script>
+
+    window.alert = function(){};
+    var defaultCSS = document.getElementById('bootstrap-css');
+    function changeCSS(css){
+        if(css) $('head > link').filter(':first').replaceWith('<link rel="stylesheet" href="'+ css +'" type="text/css" />');
+        else $('head > link').filter(':first').replaceWith(defaultCSS);
+    }
+    $( document ).ready(function() {
+
+    });
+
+
+
+
+    function post_comment(){
+
+        accossToken=localStorage.getItem("token");
+
+
+        if(accossToken==null){
+
+            document.getElementById("login_first").innerHTML="Please login first!";
+
+        }else {
+
+            usser_comment = document.getElementById('ussser_comment').value;
+
+            console.log(accossToken);
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+                    if (xhttp.responseText == 1) {
+                        document.getElementById("invalidd").innerHTML = "Login";
+                        localStorage.lastname = accossToken;
+
+
+                    } else {
+                        document.getElementById("invalidd").innerHTML = "Invalid AccessToken/Password";
+                    }
+
+
+                    console.log(xhttp.responseText);
+                } else {
+
+                }
+            };
+
+            console.log("");
+
+            xhttp.open("GET", "res/saveChat.php?accossToken=" + accossToken + "&usser_comment=" + usser_comment, true);
+            xhttp.send();
+
+        }
+
+
+
+    }
+
+
+
+
+    function login_user(){
+
+        accossToken=document.getElementById('AccessToken').value;
+        pass=document.getElementById('pass').value;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+
+                if(xhttp.responseText==1){
+                    document.getElementById("invalidd").innerHTML="Login";
+                    localStorage.setItem("token", accossToken);
+
+                    setTimeout(function(){
+                        document.getElementById("login-modal").style.display="none";
+
+                  
+                        document.getElementById("invalidd").innerHTML="";
+                        document.getElementById("AccessToken").value="";
+                        document.getElementById("pass").value="";
+                    }, 2000);
+
+
+                }else{
+                    document.getElementById("invalidd").innerHTML="Invalid AccessToken/Password";
+                    localStorage.setItem("token", null);
+                }
+
+
+                console.log(xhttp.responseText);
+            }else{
+
+            }
+        };
+
+        console.log("res/login.php?accossToken="+accossToken+"&pass="+pass);
+
+        xhttp.open("GET", "res/login.php?accossToken="+accossToken+"&pass="+pass, true);
+        xhttp.send();
+    }
+
+
+
+
+
+    var username='test';
+
+    var a='<select id="ff_select"  onchange="abc()">';
+    var z=0;
+
+    $.ajax({
+        url: "Page1List_2",
+        success: function(data){
+            $(data).find("td > a").each(function(){
+                // will loop through
+                if(z==0) {
+                    z++;
+                }else{
+                    a = a + '<option value="'+$(this).attr("href")+'">' + $(this).attr("href") + '</option>';
+                }
+
+            });
+
+            a=a+'</select>';
+            document.getElementById("ff_select_div").innerHTML=a;
+
+
+            var aaa=document.getElementById("ff_select").value;
+            document.getElementById("link123").innerHTML='<a style="text-decoration: underline;color: red;cursor: pointer;" onclick="go()" id="link_url" >'+aaa+'</a>';
+
+        }
+
+
+    });
+
+
+    var aaa=document.getElementById("ff_select").value;
+    document.getElementById("link123").innerHTML='<a style="text-decoration: underline;color: red;cursor: pointer;" onclick="go()" id="link_url" >'+aaa+'</a>';
+
+
+
+    function abc(){
+
+        var aaa=document.getElementById("ff_select").value;
+
+        send(aaa,username);
+        document.getElementById("link123").innerHTML='<a style="text-decoration: underline;color: red;cursor: pointer;" onclick="go()" id="link_url" >'+aaa+'</a>';
+
+    }
+
+
+
+    function send(page,token){
+
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    console.log("page save");
+                } else {
+                }
+            };
+            xhttp.open("GET", "res/pageChange.php?page="+page+"&user="+token, true);
+            xhttp.send();
+
+
+    }
+
+
+
+    function go(loc) {
+        var a=document.getElementById("link_url").innerHTML;
+        document.getElementById('if_page').src = "Page1List_2/"+a;
+    }
+
+
+    setInterval(function(){
+
+
+            var xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function() {
+                if (xhttp.readyState == 4 && xhttp.status == 200) {
+                    //  alert(xhttp.responseText);
+                    enterIt(xhttp.responseText);
+
+                }else{
+                }
+            };
+            xhttp.open("GET", "res/pageApi.php", true);
+            xhttp.send();
+    }, 5000);
+
+
+    function enterIt(a) {
+        acc=eval("["+a+"]");
+        acc=acc[0];
+        console.log("window refresh");
+        document.getElementById("link123").innerHTML='<a style="text-decoration: underline;color: red;cursor: pointer;" onclick="go()" id="link_url" >'+acc[0].page+'</a>';
+    }
+
+
+
+
+    setInterval(function(){
+
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                //  alert(xhttp.responseText);
+                enterIt_chat(xhttp.responseText);
+
+            }else{
+            }
+        };
+        xhttp.open("GET", "res/chatApi.php", true);
+        xhttp.send();
+    }, 5000);
+
+
+    function enterIt_chat(a) {
+        acc='';
+        acc=eval("["+a+"]");
+        acc=acc[0];
+        console.log(a);
+
+        //alert(acc);
+
+
+        document.getElementById("username1").innerHTML=acc[0].accessToken;
+        document.getElementById("chatuser1").value=acc[0].chat;
+
+        document.getElementById("username2").innerHTML=acc[1].accessToken;
+        document.getElementById("chatuser2").value=acc[1].chat;
+
+        document.getElementById("username3").innerHTML=acc[2].accessToken;
+        document.getElementById("chatuser3").value=acc[2].chat;
+
+        document.getElementById("username4").innerHTML=acc[3].accessToken;
+        document.getElementById("chatuser4").value=acc[3].chat;
+
+        document.getElementById("username5").innerHTML=acc[4].accessToken;
+        document.getElementById("chatuser5").value=acc[4].chat;
+
+
+
+     }
+
+
+
+    function loogin(){
+
+
+        accossToken=document.getElementById('AccessToken').value;
+        pass=document.getElementById('pass').value;
+
+        var xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (xhttp.readyState == 4 && xhttp.status == 200) {
+                //  alert(xhttp.responseText);
+                enterIt_chat(xhttp.responseText);
+
+            }else{
+            }
+        };
+        xhttp.open("GET", "res/chatApi.php?accossToken="+accossToken+"&pass="+pass, true);
+        xhttp.send();
+
+    }
+
+
+
+
+
+
+</script>
+
+
+
+</html>
